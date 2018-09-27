@@ -1,7 +1,12 @@
 class Api::MessagesController < ApplicationController
 
   def create
-    Messagebus.publish "/chat_channel", { email: params[:email], body: params[:body] }
+    message = current_user.messages.create(
+      email: current_user.email
+     body: params[:body]
+     )
+
+    Messagebus.publish "/chat_channel", message.attributes
   end
 
 
