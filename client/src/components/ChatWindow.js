@@ -30,16 +30,24 @@ text-decoration: underline;
 
 class ChatWindow extends React.Component {
   state = {message: ''}
+
+  conponentDidMount() {
+    this.props.dispatch(setFlash('Welcom to React Chat', 'blue'))
+  }
   displayMessages = () =>{
 
   } 
 
   setMessage = (e) => {
-
+    this.setState({ message: e.target.value })
   }
 
   addMessage = (e) => {
-
+    e.preventDefault()
+    const { dispatch, user: {email} } =this.props
+    const {message} = this.state
+    dispatch(addMessage({ email, body: message}))
+    this.setState({ message: ''})
   }
     render(){
     return(
